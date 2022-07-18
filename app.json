@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "zubar_mobile",
-    "slug": "zubar_mobile",
+    "name": "Zubar",
+    "slug": "zubar",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
