@@ -2,6 +2,11 @@
   "expo": {
     "name": "Zubar",
     "slug": "zubar",
+    "plugins": [
+      "expo-av",
+      "expo-document-picker",
+      "expo-file-system"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +23,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {

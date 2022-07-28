@@ -107,8 +107,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: WHITE,
-        paddingTop: 60,
-        paddingBottom:10,
+        paddingTop: 40,
+        paddingBottom:60,
+       
         paddingHorizontal: 28,
     },
     article: {
@@ -132,6 +133,7 @@ const styles = StyleSheet.create({
         fontSize: hp(2),
         textAlign: 'center',
         fontFamily: 'gilroy-regular',
+        marginBottom: hp(10),
         color: GRAY,
     },
     mediumText: {

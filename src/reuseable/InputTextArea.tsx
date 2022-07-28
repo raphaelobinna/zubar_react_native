@@ -59,3 +59,5 @@ const styles = StyleSheet.create({
         color:GRAY
     }
 });
+
+export default InputTextArea;

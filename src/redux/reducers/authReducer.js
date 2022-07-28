@@ -12,6 +12,7 @@ const initialState = {
     verifyEmail: {},
     indexUser:{},
     testAuth: {},
+    myProfile:{},
     shouldReload: false
 }
 
@@ -79,7 +80,7 @@ export default function authReducer(state = initialState, action) {
         case MY_PROFILE:
             return {
                 ...state,
-                user: { ...state.user, ...action.payLoad.data },
+                myProfile: action.payLoad.data.data,
             }
 
         case SHOW_USER:

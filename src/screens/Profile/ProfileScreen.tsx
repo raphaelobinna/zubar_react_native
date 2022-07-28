@@ -5,7 +5,9 @@ import { PaperBoardLayout } from '../../layouts/PaperBoardLayout';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { LIGHT_GRAY, WHITE } from '../../style';
-import { useAppSelector } from '../../redux/actions/constants';
+import { useAppDispatch, useAppSelector } from '../../redux/actions/constants';
+import AuthorizationMonitor from '../../reuseable/AuthorizationMonitor';
+import { getUserProfile } from '../../redux/actions/authActions';
 
 export default function ProfileScreen({ navigation }) {
 
@@ -18,9 +20,16 @@ export default function ProfileScreen({ navigation }) {
 
     }
 
+    const dispatch = useAppDispatch();
+
+    React.useEffect(() => {
+       dispatch(getUserProfile());
+    }, [authState.user]);
+
     return (
 
         <PaperBoardLayout style={Container} navigation={navigation} >
+            <AuthorizationMonitor navigation={navigation} />
 
             <Icon name="account-circle" style={{ alignSelf: 'center' }} size={100} color={'rgba(78, 6, 151, 1)'} />
             <Text style={styles.mediumText} >{authState.user.full_name}</Text>
@@ -39,19 +48,19 @@ export default function ProfileScreen({ navigation }) {
 
             </View>
 
-            <View style={styles.box} >
+            <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('ChangePassword')} >
                 <Text style={styles.normalText} >Change Password</Text>
 
                 <Icon name="chevron-right" style={{ alignSelf: 'center' }} size={30} color={'rgba(78, 6, 151, 1)'} />
 
-            </View>
+            </TouchableOpacity>
 
-            <View style={styles.box} >
+            <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('StatsView')} >
                 <Text style={styles.normalText} >Zubar Stats</Text>
 
                 <Icon name="chevron-right" style={{ alignSelf: 'center' }} size={30} color={'rgba(78, 6, 151, 1)'} />
 
-            </View>
+            </TouchableOpacity>
 
         </PaperBoardLayout>
 

@@ -3,7 +3,7 @@ import { isEmpty } from '../helpers/helper';
 import PropTypes, {  InferProps } from 'prop-types';
 import { useAppSelector } from '../redux/actions/constants';
 
-function AuthorizationMonitor({ route, navigation }:InferProps<typeof AuthorizationMonitor.propTypes>):React.FunctionComponent  {
+function AuthorizationMonitor({ navigation }:InferProps<typeof AuthorizationMonitor.propTypes>)  {
 
     const authState = useAppSelector(state => state.auth);
     React.useEffect(() => {
@@ -19,7 +19,6 @@ export default AuthorizationMonitor;
 
 // PropTypes
 AuthorizationMonitor.propTypes = {
-    route:PropTypes.object.isRequired,
     navigation:PropTypes.shape({
         reset:PropTypes.func.isRequired,
     }),

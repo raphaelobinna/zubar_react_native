@@ -62,3 +62,13 @@ export const SHOW_COMIC = 'SHOW_COMIC';
 export const STORE_COMIC = 'STORE_COMIC';
 export const EDIT_COMIC = 'EDIT_COMIC';
 export const DELETE_COMIC = 'DELETE_COMIC';
+export const SHOULD_RELOAD_COMIC = 'SHOULD_RELOAD_COMIC';
+
+export const INDEX_SONG = 'INDEX_SONG';
+export const FILTER_SONG = 'FILTER_SONG';
+export const SEARCH_SONG = 'SEARCH_SONG';
+export const SHOW_SONG = 'SHOW_SONG';
+export const STORE_SONG = 'STORE_SONG';
+export const EDIT_SONG = 'EDIT_SONG';
+export const DELETE_SONG = 'DELETE_SONG';
+export const SHOULD_RELOAD_SONG = 'SHOULD_RELOAD_SONG';

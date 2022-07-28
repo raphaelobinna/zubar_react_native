@@ -45,7 +45,7 @@ export const loginUserAction = (payLoad) => {
                 // dispatch(toggleActivityLoadingAction());
             })
             .catch((error) => {
-                console.log('error', error.response.data);
+                console.log('error', error.response);
                 // dispatch(toggleActivityLoadingAction());
                 Toast.show({
                     type: 'errorToast',
@@ -115,22 +115,21 @@ export const getLoggedInUser = (callBack = () => { }) => {
     }
 }
 
-export const getUserProfile = (callBack = () => { }) => {
+export const getUserProfile = () => {
     return (dispatch) => {
 
         // dispatch(toggleActivityLoadingAction());
         Axios.get(`/api/user-profile`)
             .then(data => {
-
-                dispatch({ type: MY_PROFILE, payLoad: data });
+             
+               dispatch({ type: MY_PROFILE, payLoad: data });
                 // dispatch(toggleActivityLoadingAction());
-              
-                callBack(true);
+               // callBack(true);
             })
             .catch((error) => {
                 // dispatch(toggleActivityLoadingAction());
-              
-                callBack(false);
+              errorHandler(error, true);
+               // callBack(false);
             });
     }
 }
@@ -196,6 +195,11 @@ export const updatePassword = (payLoad, callBack = () => { }) => {
     return (dispatch) => {
 
         if (!changeUserPasswordValidation(dispatch, payLoad)) {
+            Toast.show({
+                type: 'errorToast',
+                text1: "Error",
+                text2: 'Password Validation Failed'
+            });
             return false;
         }
 
@@ -241,6 +245,12 @@ export const getSingleUser = (payLoad, callBack = () => { }) => {
                 });
                 callBack(false);
             });
+    }
+}
+
+export const refreshUserAction = (payLoad) => {
+    return (dispatch) => {
+        dispatch({ type: LOGIN_USER, payLoad: payLoad });
     }
 }
 

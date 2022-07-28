@@ -3,8 +3,9 @@ import PropTypes, { InferProps } from 'prop-types';
 import { StyleSheet, TextInput, View, Pressable } from 'react-native';
 import { LIGHT_GRAY, WHITE, SITE_COLOR_LIGHT, BLACK, TRANSPARENT } from '../style/index';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { FilterSVG } from '../assets';
 
-function SearchBar({ style = {}, secureTextEntry, preInput = '', addBtn, filterBtn, searchAction, clearSearchResultsAction, placeholder = '', reference }: InferProps<typeof SearchBar.propTypes>) {
+function SearchBar({ style = {}, secureTextEntry, preInput = '', addBtn, filterBtn, searchAction, filterAction, clearSearchResultsAction, placeholder = '', reference }: InferProps<typeof SearchBar.propTypes>) {
 
     const [input, setInput] = React.useState(preInput);
     const ref = React.useRef(null);
@@ -60,7 +61,10 @@ function SearchBar({ style = {}, secureTextEntry, preInput = '', addBtn, filterB
                             <Icon name={'close'} size={20} color={SITE_COLOR_LIGHT} />
                         </Pressable>
                     )
-                        : null
+                        :  
+                        <Pressable style={[styles.filterIcon]} onPress={() => filterAction()} >
+                            <FilterSVG height={15} width={15} />
+                        </Pressable>
                 }
 
             </View>
@@ -77,6 +81,7 @@ SearchBar.propTypes = {
     preInput: PropTypes.string,
     placeholder: PropTypes.string,
     searchAction: PropTypes.func.isRequired,
+    filterAction: PropTypes.func.isRequired,
     clearSearchResultsAction: PropTypes.func.isRequired,
     addBtn: PropTypes.func,
     TheSVG: PropTypes.string,
@@ -112,10 +117,11 @@ const styles = StyleSheet.create({
         marginLeft: '3%',
         marginRight: '3%'
     },
+   
     filterIcon: {
-        marginTop: '5%',
-        marginRight: '3%',
-        marginLeft: '3%',
+      
+      
+        marginLeft: '-7%',
         alignSelf: "center",
     },
     filterCard: {

@@ -215,3 +215,16 @@ export function RankingSVG({ height, width, style = {}, color = 'black' }) {
         </View>
     )
 }
+
+export function FilterSVG({ height, width, style = {} }) {
+    return (
+        <View style={{...style}} >
+            <Svg width={width ?? "15"} height={height ?? "15"} viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <Path d="M6.35781 11.4121H1.50342" stroke="#130F26" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" />
+                <Path fill-rule="evenodd" clip-rule="evenodd" d="M9.40369 11.4128C9.40369 12.9441 9.91436 13.4541 11.445 13.4541C12.9757 13.4541 13.4864 12.9441 13.4864 11.4128C13.4864 9.88144 12.9757 9.37144 11.445 9.37144C9.91436 9.37144 9.40369 9.88144 9.40369 11.4128Z" stroke="#130F26" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" />
+                <Path d="M8.63232 3.54564H13.486" stroke="#130F26" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" />
+                <Path fill-rule="evenodd" clip-rule="evenodd" d="M5.58641 3.54464C5.58641 2.01397 5.07574 1.5033 3.54506 1.5033C2.01372 1.5033 1.50305 2.01397 1.50305 3.54464C1.50305 5.07598 2.01372 5.58598 3.54506 5.58598C5.07574 5.58598 5.58641 5.07598 5.58641 3.54464Z" stroke="#130F26" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" />
+            </Svg>
+        </View>
+    )
+}

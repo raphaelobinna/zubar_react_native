@@ -27,6 +27,14 @@ import { SITE_COLOR, WHITE } from './src/style';
 import { HeaderLeft } from './src/header/HeaderLeft';
 import Rankings from './src/screens/Rankings/Rankings';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
+import WelcomeScreen from './src/screens/Common/WelcomeScreen';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { LogoutScreen } from './src/screens/Authorization/LogOutScreen';
+import ComicsDetails from './src/screens/Comics/ComicDetails';
+import ComicView from './src/screens/Comics/ComicView';
+import SongView from './src/presenters/player/MusicController';
+import StatsView from './src/screens/Profile/ZubarStats';
+import ChangePasswordScreen from './src/screens/Profile/ChangePasswordScreen';
 
 export default function App() {
 
@@ -75,7 +83,7 @@ export default function App() {
     ),
     errorToast: ({ text1, text2 }) => (
       <View style={{
-         width: '90%', alignSelf: 'center',
+        width: '90%', alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(255,0,0,0.95)',
         borderRadius: 8
@@ -87,7 +95,7 @@ export default function App() {
       </View>
     )
   }
-  
+
 
   function DrawerNavigator() {
     return (
@@ -96,7 +104,7 @@ export default function App() {
           initialRouteName="Home"
           screenOptions={{
             headerShown: false,
-            headerLeft:(props) => <></>,
+            headerLeft: (props) => <></>,
             drawerStyle: {
               width: metrics.screenWidth * 0.86,
               backgroundColor: WHITE
@@ -105,9 +113,9 @@ export default function App() {
             unmountOnBlur: true,
             drawerType: 'front',
             swipeEnabled: true,
-            drawerActiveBackgroundColor:SITE_COLOR,
+            drawerActiveBackgroundColor: SITE_COLOR,
             drawerActiveTintColor: WHITE,
-            drawerLabelStyle:{fontFamily:'gilroy-bold'},
+            drawerLabelStyle: { fontFamily: 'gilroy-bold' },
           }}
           drawerContent={(props) => <DrawerContent {...props} />}>
 
@@ -121,10 +129,15 @@ export default function App() {
             component={ProfileScreen}
             options={{ headerShown: false, title: 'Profile', drawerIcon: ({ color }) => <ProfileSVG color={color} height={32} width={32} /> }}
           />
-           <Drawer.Screen
+          <Drawer.Screen
             name="Rankings"
             component={Rankings}
             options={{ headerShown: false, title: 'Rankings', drawerIcon: ({ color }) => <RankingSVG color={color} height={32} width={32} /> }}
+          />
+          <Drawer.Screen
+            name="Sign Out"
+            component={LogoutScreen}
+            options={{ headerShown: false, title: 'Sign Out', drawerIcon: ({ color }) => <Icon name='logout' color={color} size={32} /> }}
           />
           {/* <Drawer.Screen
             name="IndexTrackOrders"
@@ -173,7 +186,7 @@ export default function App() {
           name="IndexSearch"
           component={SearchScreen}
           options={{
-           
+
             tabBarButton: (props) => <TabImageButton {...props} title={'Search'} iconName={'search'} />
           }}
         />
@@ -211,19 +224,15 @@ export default function App() {
   return (
     <Provider store={store}>
       <RootSiblingParent>
-       
+
         <NavigationContainer>
           <Stack.Navigator>
-            {/* <Stack.Screen
-            name="Loading"
-            component={LoadingScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Welcome"
-            component={WelcomeScreen}
-            options={{ headerShown: false }}
-          /> */}
+
+            <Stack.Screen
+              name="Welcome"
+              component={WelcomeScreen}
+              options={{ headerShown: false }}
+            />
 
             <Stack.Screen
               name="Login"
@@ -240,6 +249,36 @@ export default function App() {
               name="Drawer"
               component={DrawerNavigator}
               options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="ComicDetail"
+              component={ComicsDetails}
+              options={{ headerShown: true, headerBackTitleVisible: false }}
+            />
+
+            <Stack.Screen
+              name="ComicView"
+              component={ComicView}
+              options={{ headerShown: true, headerTitle: '', headerBackTitleVisible: false }}
+            />
+
+            <Stack.Screen
+              name="MusicView"
+              component={SongView}
+              options={{ headerShown: true, headerTitle: '', headerBackTitleVisible: false }}
+            />
+
+            <Stack.Screen
+              name="StatsView"
+              component={StatsView}
+              options={{ headerShown: true, headerTitle: 'Stats', headerBackTitleVisible: false }}
+            />
+
+            <Stack.Screen
+              name="ChangePassword"
+              component={ChangePasswordScreen}
+              options={{ headerShown: true, headerTitle: 'Change Password', headerBackTitleVisible: false }}
             />
 
 

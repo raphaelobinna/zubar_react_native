@@ -3,6 +3,7 @@ import axios from 'axios';
 import { refreshUserTokenLocallyAction, logoutUserLocallyAction } from '../redux/actions/unAuthActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import store from '../redux/store';
+import { refreshUserAction } from '../redux/actions/authActions';
 
 // Get user details
 const userDetails = () => {
@@ -29,10 +30,16 @@ const retryAgain = async () => {
 
 // Refresh token
 const refreshToken = async (token = null) => {
-  return axios.post(`${Constants.manifest.extra.appApiUrl}/auth/refresh`,{},{headers:{Authorization:'Bearer '+token}})
+  // get last logger email, if non assign empty string
+  let email = await AsyncStorage.getItem('user_email') ?? '';
+
+  // get last logger password, if non assign empty string
+  let password = await AsyncStorage.getItem('user_password') ?? '';
+
+  return axios.post(`${Constants.manifest.extra.appApiUrl}/auth/login`,{email, password})
   .then(data => {
     // Send new token to reducer
-    store.dispatch(refreshUserTokenLocallyAction(data));
+    store.dispatch(refreshUserAction(data));
     return data;
   })
   .catch((error) => {
@@ -151,6 +158,8 @@ instance.interceptors.request.use( async (req) => {
   // Set header content type and acceptable type
   // req.headers['Content-Type'] = 'application/x-www-form-urlencoded';
   // req.headers['Accept'] = '*/*';
+
+  //req.headers['Content-Type'] = 'multipart/form-data';
 
   // Reattach the base url
   if (!req.baseURL) {

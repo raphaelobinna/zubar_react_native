@@ -22,6 +22,7 @@ export default function SearchScreen({ navigation }) {
                 placeholder={'Search...'}
                 clearSearchResultsAction={() => { }}
                 searchAction={(value) => { }}
+                filterAction={(value) => { }}
             />
 
         </PaperBoardLayout>

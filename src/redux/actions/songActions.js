@@ -1,4 +1,4 @@
-import { DELETE_COMIC, EDIT_COMIC, INDEX_COMIC, SEARCH_COMIC, SHOULD_RELOAD_COMIC, SHOW_COMIC, STORE_COMIC } from './types';
+import { DELETE_COMIC, DELETE_SONG, EDIT_COMIC, EDIT_SONG, INDEX_COMIC, INDEX_SONG, SEARCH_COMIC, SEARCH_SONG, SHOULD_RELOAD_COMIC, SHOULD_RELOAD_SONG, SHOW_COMIC, SHOW_SONG, STORE_COMIC, STORE_SONG } from './types';
 import Axios from '../../connection/defaultClient';
 import errorHandler from '../../handlers/errorHandler';
 import successHandler from '../../handlers/successHandler';
@@ -6,76 +6,50 @@ import { toggleActivityLoadingAction } from "../actions/alertActions";
 import { mapAs } from '../../helpers/helper';
 
 
-export const storeAComicAction = (payLoad, callBack) => {
+export const storeASongAction = (payLoad, callBack=()=>{}) => {
     return (dispatch) => {
 
-        Axios.post(`/api/comic/upload`, {...payLoad})
+      
+   
+        Axios.post(`/api/song/upload`, { ...payLoad })
             .then(data => {
-              
-                dispatch({ type: STORE_COMIC, payLoad: data });
-                dispatch({type:SHOULD_RELOAD_COMIC,payLoad:true});
-               
+          
+                dispatch({ type: STORE_SONG, payLoad: data });
+                dispatch({ type: SHOULD_RELOAD_SONG, payLoad: true });
+
+            
                 successHandler(data, true)
-                callBack()
+                callBack(true)
             })
             .catch((error) => {
-           
+                callBack(false)
+              
                 errorHandler(error, true);
             });
     }
 }
 
-export const getAllComicsAction = (payLoad) => {
+export const getAllSongsAction = (payLoad) => {
     return (dispatch) => {
 
-        Axios.post(`/api/comics`, {...payLoad})
+        Axios.post(`/api/songs`, { ...payLoad })
             .then(data => {
 
-                dispatch({ type: INDEX_COMIC, payLoad: data.data });
+                dispatch({ type: INDEX_SONG, payLoad: data.data });
             })
             .catch((error) => {
-               
+
                 errorHandler(error, true);
             });
     }
 }
 
-export const searchComicsAction = (payLoad) => {
-    return (dispatch) => {
-        dispatch(toggleActivityLoadingAction());
-        Axios.post(`/api/comic/name`, { ...payLoad })
-            .then(data => {
-                dispatch({ type: SEARCH_COMIC, payLoad: data.data });
-                dispatch(toggleActivityLoadingAction());
-            })
-            .catch((error) => {
-                dispatch(toggleActivityLoadingAction());
-                errorHandler(error, true);
-            });
-    }
-}
-
-export const likeAComicAction = (payLoad) => {
-    return (dispatch) => {
-        //dispatch(toggleActivityLoadingAction());
-        Axios.post(`/api/comic/like`, { ...payLoad })
-            .then(data => {
-                dispatch({ type: SHOW_COMIC, payLoad: data.data });
-               // dispatch(toggleActivityLoadingAction());
-            })
-            .catch((error) => {
-               // dispatch(toggleActivityLoadingAction());
-                errorHandler(error, true);
-            });
-    }
-}
-
-export const showAComicAction = (payLoad) => {
+export const searchSongsAction = (payLoad) => {
     return (dispatch) => {
         dispatch(toggleActivityLoadingAction());
-        Axios.get(`/api/comic`, { params: { ...payLoad } })
+        Axios.post(`/api/song/name`, { ...payLoad })
             .then(data => {
-                dispatch({ type: SHOW_COMIC, payLoad: data });
+                dispatch({ type: SEARCH_SONG, payLoad: data.data });
                 dispatch(toggleActivityLoadingAction());
             })
             .catch((error) => {
@@ -85,12 +59,12 @@ export const showAComicAction = (payLoad) => {
     }
 }
 
-export const editAComicAction = (payLoad) => {
+export const showASongAction = (payLoad) => {
     return (dispatch) => {
         dispatch(toggleActivityLoadingAction());
-        Axios.post(`/api/comic/update`, { ...payLoad })
+        Axios.get(`/api/song`, { params: { ...payLoad } })
             .then(data => {
-                dispatch({ type: EDIT_COMIC, payLoad: data });
+                dispatch({ type: SHOW_SONG, payLoad: data });
                 dispatch(toggleActivityLoadingAction());
             })
             .catch((error) => {
@@ -100,12 +74,27 @@ export const editAComicAction = (payLoad) => {
     }
 }
 
-export const deleteAComicAction = (payLoad) => {
+export const editASongAction = (payLoad) => {
     return (dispatch) => {
         dispatch(toggleActivityLoadingAction());
-        Axios.post(`/comic/delete`, { ...payLoad })
+        Axios.post(`/api/song/update`, { ...payLoad })
             .then(data => {
-                dispatch({ type: DELETE_COMIC, payLoad: data });
+                dispatch({ type: EDIT_SONG, payLoad: data });
+                dispatch(toggleActivityLoadingAction());
+            })
+            .catch((error) => {
+                dispatch(toggleActivityLoadingAction());
+                errorHandler(error, true);
+            });
+    }
+}
+
+export const deleteASongAction = (id) => {
+    return (dispatch) => {
+        dispatch(toggleActivityLoadingAction());
+        Axios.post(`/song/delete/${id}`)
+            .then(data => {
+                dispatch({ type: DELETE_SONG, payLoad: data });
                 dispatch(toggleActivityLoadingAction());
             })
             .catch((error) => {
