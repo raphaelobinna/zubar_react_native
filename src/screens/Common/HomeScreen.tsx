@@ -108,7 +108,7 @@ export default function HomeScreen({ navigation }) {
                             {
                                 songState?.songs.length > 0 && songState.songs.map((item, index) => (
                                     <TouchableOpacity key={index} style={styles.musicContainer} onPress={() => navigation.navigate('MusicView', { index: index })} >
-                                        <Image style={styles.image} resizeMode={'cover'} source={{ uri: item?.cover_picture }} />
+                                        <Image style={styles.musicImage} resizeMode={'cover'} source={{ uri: item?.cover_picture }} />
                                         <View style={{ marginTop: hp(1) }} >
                                             <Text style={styles.songName}>{item?.song_name}<Text style={styles.description}>{' by ' + item?.full_name}</Text></Text>
                                         </View>
@@ -163,6 +163,13 @@ const SearchBarStyle = StyleSheet.create({
 const styles = StyleSheet.create({
     image: {
         width: wp(40),
+
+        height: '100%',
+        marginRight: wp(5),
+        borderRadius: 8,
+    },
+    musicImage: {
+        width: wp(39),
 
         height: '100%',
         marginRight: wp(5),

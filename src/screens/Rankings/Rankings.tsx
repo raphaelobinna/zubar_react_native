@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 
 import {View} from 'react-native'
+import { PaperBoardLayout } from '../../layouts/PaperBoardLayout';
 
-export default function Rankings() {
+export default function Rankings({ navigation }) {
 
     const [, set] = useState();
 
         return (
 
-            <View />
+          <PaperBoardLayout navigation={navigation} >
+
+          </PaperBoardLayout>
 
         );
 }

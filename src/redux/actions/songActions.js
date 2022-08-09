@@ -1,4 +1,4 @@
-import { DELETE_COMIC, DELETE_SONG, EDIT_COMIC, EDIT_SONG, INDEX_COMIC, INDEX_SONG, SEARCH_COMIC, SEARCH_SONG, SHOULD_RELOAD_COMIC, SHOULD_RELOAD_SONG, SHOW_COMIC, SHOW_SONG, STORE_COMIC, STORE_SONG } from './types';
+import { DELETE_COMIC, DELETE_SONG, EDIT_COMIC, EDIT_SONG, INDEX_COMIC, INDEX_SONG, SEARCH_COMIC, SEARCH_SONG, SHOULD_RELOAD_COMIC, SHOULD_RELOAD_SONG, SHOULD_RELOAD_USER, SHOW_COMIC, SHOW_SONG, STORE_COMIC, STORE_SONG } from './types';
 import Axios from '../../connection/defaultClient';
 import errorHandler from '../../handlers/errorHandler';
 import successHandler from '../../handlers/successHandler';
@@ -54,6 +54,23 @@ export const searchSongsAction = (payLoad) => {
             })
             .catch((error) => {
                 dispatch(toggleActivityLoadingAction());
+                errorHandler(error, true);
+            });
+    }
+}
+
+export const likeASongAction = (payLoad) => {
+    return (dispatch) => {
+        console.log(payLoad)
+      //  dispatch(toggleActivityLoadingAction());
+        Axios.post(`/api/song/like`, { ...payLoad })
+            .then(data => {
+                dispatch({ type: SHOULD_RELOAD_USER, payLoad:true})
+                dispatch({ type: SHOW_SONG, payLoad: data.data });
+                //dispatch(toggleActivityLoadingAction());
+            })
+            .catch((error) => {
+               // dispatch(toggleActivityLoadingAction());
                 errorHandler(error, true);
             });
     }

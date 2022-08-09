@@ -24,7 +24,7 @@ export default function ProfileScreen({ navigation }) {
 
     React.useEffect(() => {
        dispatch(getUserProfile());
-    }, [authState.user]);
+    }, [authState.user, authState.shouldReload]);
 
     return (
 

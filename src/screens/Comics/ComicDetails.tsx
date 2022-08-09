@@ -8,14 +8,26 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { BLACK, LIGHT_GRAY, SITE_COLOR } from '../../style';
 import { isEmpty } from '../../helpers/helper';
 import InputText from '../../reuseable/InputText';
+import { useAppDispatch } from '../../redux/actions/constants';
+import { likeAComicAction } from '../../redux/actions/comicActions';
+import { ToggleIcon } from '../../reuseable/AnimatedLikeButton';
 
 
 export default function ComicsDetails({ navigation, route }) {
     const { comic } = route.params;
 
+    const dispatch = useAppDispatch()
+
     const [comment, setComment] = React.useState('');
 
+    const [click, setClick] = React.useState(false);
 
+    function onPress() {
+     
+        setClick(true);
+        dispatch(likeAComicAction({ id: comic.id }))
+
+    }
 
     return (
 
@@ -42,11 +54,15 @@ export default function ComicsDetails({ navigation, route }) {
                 </ScrollView>
 
                 <View style={{ ...styles.cardRow, marginVertical: hp(2) }} >
-                    <Icon style={styles.icon} name={'heart-multiple-outline'} size={hp(4)} color={SITE_COLOR} />
+                    {/* <TouchableOpacity onPress={() => dispatch(likeAComicAction({ id: comic.id }))} >
+                        <Icon style={styles.icon} name={'heart-multiple-outline'} size={hp(4)} color={SITE_COLOR} />
+                    </TouchableOpacity> */}
+
+                    <ToggleIcon click={click} returnInput={() => onPress()} />
 
                     <MaterialIcon style={styles.icon} name={'monetization-on'} size={hp(4)} color={LIGHT_GRAY} />
 
-                    <TouchableOpacity style={styles.floatingIcon} onPress={() => navigation.navigate('ComicView', { comic: comic?.slides  })} >
+                    <TouchableOpacity style={styles.floatingIcon} onPress={() => navigation.navigate('ComicView', { comic: comic?.slides })} >
                         <Icon name="eye" size={hp(4)} color={'rgba(29, 113, 185, 0.5)'} />
                     </TouchableOpacity>
                 </View>
@@ -138,7 +154,7 @@ const styles = StyleSheet.create({
     },
     floatingIcon: {
         position: 'absolute',
-      
+
         right: wp(2),
     }
 })

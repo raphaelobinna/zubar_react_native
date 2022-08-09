@@ -2,16 +2,24 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity, View, Image, Text, ActivityIndicator } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { Audio } from 'expo-av'
-import { useAppSelector } from '../../redux/actions/constants'
+import { useAppDispatch, useAppSelector } from '../../redux/actions/constants'
 import Icon from 'react-native-vector-icons/AntDesign';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { getVideos } from './getAudio'
 import { SITE_COLOR } from '../../style'
+import { ToggleIcon } from '../../reuseable/AnimatedLikeButton'
+import { likeASongAction } from '../../redux/actions/songActions'
 
 
 export default function SongView({ navigation, route }) {
 
 	const songState = useAppSelector(state => state.song);
+
+	const [click, setClick] = React.useState(false);
+
+	const dispatch = useAppDispatch()
+
+
 
 	const [isPlaying, setIsPlaying] = React.useState(false)
 	const [playbackInstance, setPlaybackInstance] = React.useState(null)
@@ -27,9 +35,16 @@ export default function SongView({ navigation, route }) {
 		}
 	}, [route.params])
 
+	function onPress() {
+
+		setClick(true);
+		dispatch(likeASongAction({ id: songState.songs[currentIndex].id }))
+
+	}
+
 
 	React.useEffect(() => {
-		
+
 		//	getVideos();
 
 		(async () => {
@@ -50,14 +65,14 @@ export default function SongView({ navigation, route }) {
 			}
 		})();
 	}, [currentIndex])
-	
+
 
 	const loadAudio = async () => {
-	
+
 
 		try {
-			console.log('ssggs',songState.songs[currentIndex].song)
-			console.log('ssggs',songState.songs[currentIndex].song_name)
+			console.log('ssggs', songState.songs[currentIndex].song)
+			console.log('ssggs', songState.songs[currentIndex].song_name)
 			const playbackInstance = new Audio.Sound()
 			const source = {
 				uri: `${songState.songs[currentIndex].song}`
@@ -142,7 +157,9 @@ export default function SongView({ navigation, route }) {
 				<Text style={[styles.trackInfoText, styles.smallText]}>
 					{songState.songs[currentIndex].full_name}
 				</Text>
-				<Icon name='hearto' style={{ alignSelf: 'center', marginVertical: hp(1) }} size={40} color='#444' />
+				<View style={{alignSelf:'center', marginVertical:5}} >
+					<ToggleIcon click={click} returnInput={() => onPress()} />
+				</View>
 				{/* <Text style={[styles.trackInfoText, styles.smallText]}>
 					{songState.songs[currentIndex].source}
 				</Text> */}
