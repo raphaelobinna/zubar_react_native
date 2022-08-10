@@ -1,59 +1,73 @@
-import { DELETE_SONG, EDIT_SONG, INDEX_SONG, SEARCH_SONG, SHOULD_RELOAD_SONG, SHOW_SONG, STORE_SONG } from '../actions/types';
+import {
+  DELETE_SONG,
+  EDIT_SONG,
+  FILTER_SONG,
+  INDEX_SONG,
+  SEARCH_SONG,
+  SHOULD_RELOAD_SONG,
+  SHOW_SONG,
+  STORE_SONG,
+} from "../actions/types";
 
 const initialState = {
-    singleSong: {},
-    songs: [],
-    searchSong: [],
-    shouldReload: false,
-}
+  singleSong: {},
+  songs: [],
+  searchSong: [],
+  filteredSong: [],
+  shouldReload: false,
+};
 
 export default function songReducer(state = initialState, action) {
+  switch (action.type) {
+    case STORE_SONG:
+      return {
+        ...state,
+        singleSong: action.payLoad,
+      };
 
-    switch (action.type) {
+    case INDEX_SONG:
+      return {
+        ...state,
+        songs: action.payLoad.data.data,
+      };
 
-        case STORE_SONG:
-            return {
-                ...state,
-                singleSong: action.payLoad
-            }
+    case FILTER_SONG:
+      return {
+        ...state,
+        filteredSong: action.payLoad.data,
+      };
 
-        case INDEX_SONG:
-            return {
-                ...state,
-                songs: action.payLoad.data.data
-            }
+    case SEARCH_SONG:
+      return {
+        ...state,
+        singleSong: action.payLoad,
+      };
 
-        case SEARCH_SONG:
-            return {
-                ...state,
-                singleSong: action.payLoad
-            }
+    case SHOW_SONG:
+      return {
+        ...state,
+        singleSong: action.payLoad,
+      };
 
-        case SHOW_SONG:
-            return {
-                ...state,
-                singleSong: action.payLoad
-            }
+    case EDIT_SONG:
+      return {
+        ...state,
+        singleSong: action.payLoad,
+      };
 
-        case EDIT_SONG:
-            return {
-                ...state,
-                singleSong: action.payLoad
-            }
+    case DELETE_SONG:
+      return {
+        ...state,
+        singleSong: action.payLoad,
+      };
 
-        case DELETE_SONG:
-            return {
-                ...state,
-                singleSong: action.payLoad
-            }
+    case SHOULD_RELOAD_SONG:
+      return {
+        ...state,
+        shouldReload: !state.shouldReload,
+      };
 
-            case SHOULD_RELOAD_SONG:
-            return {
-                ...state,
-                shouldReload: !state.shouldReload,
-            }
-
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }

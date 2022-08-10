@@ -1,4 +1,4 @@
-import { DELETE_COMIC, EDIT_COMIC, INDEX_COMIC, SEARCH_COMIC, SHOULD_RELOAD_COMIC, SHOULD_RELOAD_USER, SHOW_COMIC, STORE_COMIC } from './types';
+import { DELETE_COMIC, EDIT_COMIC, FILTER_COMIC, INDEX_COMIC, SEARCH_COMIC, SHOULD_RELOAD_COMIC, SHOULD_RELOAD_USER, SHOW_COMIC, STORE_COMIC } from './types';
 import Axios from '../../connection/defaultClient';
 import errorHandler from '../../handlers/errorHandler';
 import successHandler from '../../handlers/successHandler';
@@ -32,6 +32,21 @@ export const getAllComicsAction = (payLoad) => {
             .then(data => {
 
                 dispatch({ type: INDEX_COMIC, payLoad: data.data });
+            })
+            .catch((error) => {
+               
+                errorHandler(error, true);
+            });
+    }
+}
+
+export const getComicsByLikes = (payLoad) => {
+    return (dispatch) => {
+
+        Axios.post(`/api/comic/all/like`, {...payLoad})
+            .then(data => {
+
+                dispatch({ type: FILTER_COMIC, payLoad: data.data });
             })
             .catch((error) => {
                

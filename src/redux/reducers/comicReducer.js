@@ -1,59 +1,73 @@
-import { USER_HELP_MESSAGE, SAVE_GENDER, SAVE_BOOLEAN_CHOICE, SAVE_FLAG_CHOICE, STORE_COMIC, INDEX_COMIC, SEARCH_COMIC, SHOW_COMIC, EDIT_COMIC, DELETE_COMIC, SHOULD_RELOAD_COMIC } from '../actions/types';
+import {
+  STORE_COMIC,
+  INDEX_COMIC,
+  SEARCH_COMIC,
+  SHOW_COMIC,
+  EDIT_COMIC,
+  DELETE_COMIC,
+  SHOULD_RELOAD_COMIC,
+  FILTER_COMIC,
+} from "../actions/types";
 
 const initialState = {
-    singleComic: {},
-    comics: [],
-    searchComic: [],
-    shouldReload: false,
-}
+  singleComic: {},
+  comics: [],
+  searchComic: [],
+  filteredComic: [],
+  shouldReload: false,
+};
 
 export default function comicReducer(state = initialState, action) {
+  switch (action.type) {
+    case STORE_COMIC:
+      return {
+        ...state,
+        singleComic: action.payLoad,
+      };
 
-    switch (action.type) {
+    case INDEX_COMIC:
+      return {
+        ...state,
+        comics: action.payLoad.data.data,
+      };
 
-        case STORE_COMIC:
-            return {
-                ...state,
-                singleComic: action.payLoad
-            }
+    case FILTER_COMIC:
+      return {
+        ...state,
+        filteredComic: action.payLoad.data,
+      };
 
-        case INDEX_COMIC:
-            return {
-                ...state,
-                comics: action.payLoad.data.data
-            }
+    case SEARCH_COMIC:
+      return {
+        ...state,
+        searchComic: action.payLoad,
+      };
 
-        case SEARCH_COMIC:
-            return {
-                ...state,
-                searchComic: action.payLoad
-            }
+    case SHOW_COMIC:
+      return {
+        ...state,
+        singleComic: action.payLoad,
+      };
 
-        case SHOW_COMIC:
-            return {
-                ...state,
-                singleComic: action.payLoad
-            }
+    case EDIT_COMIC:
+      return {
+        ...state,
+        singleComic: action.payLoad,
+      };
 
-        case EDIT_COMIC:
-            return {
-                ...state,
-                singleComic: action.payLoad
-            }
+    case DELETE_COMIC:
+      return {
+        ...state,
+        singleComic: action.payLoad,
+      };
 
-        case DELETE_COMIC:
-            return {
-                ...state,
-                singleComic: action.payLoad
-            }
+    case SHOULD_RELOAD_COMIC:
+      return {
+        ...state,
+        shouldReload: !state.shouldReload,
+      };
 
-            case SHOULD_RELOAD_COMIC:
-            return {
-                ...state,
-                shouldReload: !state.shouldReload,
-            }
-
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }
