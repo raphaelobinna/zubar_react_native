@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 
-import { StyleSheet, View, useWindowDimensions } from "react-native";
+import { StyleSheet, View, Image, useWindowDimensions } from "react-native";
 import { useAppDispatch } from "../../redux/actions/constants";
 import { TabView, TabBar } from "react-native-tab-view";
-import { GRAY, SITE_COLOR, TRANSPARENT, WHITE } from "../../style";
+import {
+  ComicRanking,
+  GRAY,
+  MusicRanking,
+  SITE_COLOR,
+  TRANSPARENT,
+  WHITE,
+} from "../../style";
 import AuthorizationMonitor from "../../reuseable/AuthorizationMonitor";
 import ComicRankings from "./ComicRankings";
 import SongRankings from "./MusicRanking";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
 
 export default function Rankings({ navigation, route }) {
   const dispatch = useAppDispatch();
@@ -75,15 +86,32 @@ export default function Rankings({ navigation, route }) {
   return (
     <View style={styles.container}>
       <AuthorizationMonitor navigation={navigation} />
+      <View style={{ flex: 0.5 }}>
+        <View
+          style={{
+            width: wp(90),
+            height: hp(35),
+            alignItems: "center",
+            alignSelf: "center",
+          }}
+        >
+          <Image
+            style={{ width: "100%", height: "100%" }}
+            source={index === 0 ? ComicRanking : MusicRanking}
+          />
+        </View>
+      </View>
 
-      <TabView
-        lazy={lazyLoad}
-        renderTabBar={renderTabBar}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-      />
+      <View style={{ flex: 1 }}>
+        <TabView
+          lazy={lazyLoad}
+          renderTabBar={renderTabBar}
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: layout.width }}
+        />
+      </View>
     </View>
   );
 }
